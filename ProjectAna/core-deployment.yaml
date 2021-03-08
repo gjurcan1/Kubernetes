@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: core
+  name: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: core
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: core
+    spec:
+      containers:
+      - env:
+        - name: AGENT_URL
+          value: http://ana-agent:9600/api/messages
+        - name: DB_CONNECTION
+          value: mongodb://mongodb:27017/anachatdb?readPreference=primary
+        - name: DEFAULT_BUSINESS_ID
+          value: "1213618262009721"
+        - name: GATEWAY_URL
+          value: http://api-gateway:8080/api
+        - name: HOST
+          value: 0.0.0.0
+        - name: IS_AWS_ENABLED
+          value: "FALSE"
+        - name: PORT
+          value: "9500"
+        - name: REDIS_HOST
+          value: redis
+        - name: REDIS_PORT
+          value: "6379"
+        image: projectana/anacore
+        imagePullPolicy: ""
+        name: core
+        ports:
+        - containerPort: 9500
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ws-customers
+  name: ws-customers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ws-customers
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ws-customers
+    spec:
+      containers:
+      - env:
+        - name: ANA_MYSQL_HOST
+          value: db
+        - name: ANA_MYSQL_PASSWORD
+          value: mysql123
+        - name: ANA_MYSQL_PORT
+          value: "3306"
+        - name: ANA_MYSQL_USERNAME
+          value: root
+        - name: ANA_REDIS_CLUSTER_ENABLED
+          value: "false"
+        - name: ANA_REDIS_HOST
+          value: redis
+        - name: ANA_REDIS_PORT
+          value: "6379"
+        - name: ANA_SPRING_CLOUD_EUREKA_URL
+          value: http://service-registry:8761
+        - name: ANA_WS_CUSTOMERS_PORT
+          value: "8088"
+        image: projectana/ws-customers
+        imagePullPolicy: ""
+        name: ws-customers
+        ports:
+        - containerPort: 8088
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null

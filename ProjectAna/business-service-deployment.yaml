@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: business-service
+  name: business-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: business-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Kompose\kompose-windows-amd64.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: business-service
+    spec:
+      containers:
+      - env:
+        - name: ANA_BUSINESS_REGISTRATION_PUBLIC_ENABLED
+          value: "false"
+        - name: ANA_BUSINESS_SERVICE_PORT
+          value: "8087"
+        - name: ANA_CORE_URL
+          value: http://core:9500
+        - name: ANA_MONGODB_URI
+          value: mongodb://mongodb:27017/anachatdb?readPreference=primary
+        - name: ANA_MYSQL_HOST
+          value: db
+        - name: ANA_MYSQL_PASSWORD
+          value: mysql123
+        - name: ANA_MYSQL_PORT
+          value: "3306"
+        - name: ANA_MYSQL_USERNAME
+          value: root
+        - name: ANA_REDIS_HOST
+          value: redis
+        - name: ANA_REDIS_PORT
+          value: "6379"
+        - name: ANA_SPRING_CLOUD_EUREKA_URL
+          value: http://service-registry:8761
+        image: projectana/chat.ana.businesses
+        imagePullPolicy: ""
+        name: business-service
+        ports:
+        - containerPort: 8087
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
